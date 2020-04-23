@@ -52,12 +52,14 @@ public class TestSuiteBehaviorsActivity extends Activity implements ResultNotifi
         resultsView = (ListView) findViewById(R.id.test_suite_results);
         ZeteticApplication.getInstance().setCurrentActivity(this);
 
-        if (getIntent().getBooleanExtra(EXTRA_IS_SUPPORT, false)) {
-            new SupportSuiteRunner(this).execute(this);
-        }
-        else {
-            new TestSuiteRunner(this).execute(this);
-        }
+//        if (getIntent().getBooleanExtra(EXTRA_IS_SUPPORT, false)) {
+//            new SupportSuiteRunner(this).execute(this);
+//        }
+//        else {
+//            new TestSuiteRunner(this).execute(this);
+//        }
+         new TestSuiteRunner(this).execute(this);
+
     }
 
     @Override

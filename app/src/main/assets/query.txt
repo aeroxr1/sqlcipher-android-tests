@@ -1,0 +1,12 @@
+SELECT      CAST(json_extract([a_customerbase].[json], '$.remoteId') AS TEXT) AS remoteid,
+           CAST (json_extract([Quote].[json], '$.entity.customer.customerId') AS TEXT) as customerId,
+		   CAST (json_extract([a_customerbase].[json], '$.localId') AS TEXT) as custmerLocalId,
+		 CAST (json_extract([Quote].[json], '$.localLinks."entity.customer.customerId"') AS TEXT) as localLinksCustomerID
+FROM      [a_customerbase]
+LEFT JOIN Quote
+ON        (( CAST (json_extract([a_customerbase].[json], '$.remoteId') AS TEXT) IS NOT NULL
+             AND CAST (json_extract([a_customerbase].[json], '$.remoteId') AS TEXT) = CAST (json_extract([Quote].[json], '$.entity.customer.customerId') AS TEXT))
+             OR
+             CAST (json_extract([a_customerbase].[json], '$.localId') AS TEXT) = CAST (json_extract([Quote].[json], '$.localLinks."entity.customer.customerId"') AS TEXT))
+
+WHERE     CAST (json_extract([a_customerbase].[json], '$.remoteId') AS TEXT) in (4832)

@@ -2,7 +2,10 @@ package net.zetetic;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteDatabaseHook;
@@ -120,5 +123,26 @@ public class ZeteticApplication extends Application {
     public void postKey(SQLiteDatabase database) {
     }
   };
+
+  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+  public String loadTextFromAssets(String assetsPath) throws IOException {
+    StringBuilder text = new StringBuilder();
+
+    try {
+      InputStream is = getAssets().open(assetsPath);
+      InputStreamReader inputStreamReader = new InputStreamReader(is);
+      BufferedReader br = new BufferedReader(inputStreamReader);
+      String line;
+
+      while ((line = br.readLine()) != null) {
+        text.append(line);
+        text.append('\n');
+      }
+      br.close();
+    }
+    catch (IOException e) {
+    }
+    return text.toString();
+  }
 
 }
